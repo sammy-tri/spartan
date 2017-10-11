@@ -67,7 +67,7 @@ else()
   set(BAZEL_COMPILATION_MODE opt)
 endif()
 set(BAZEL_ENV CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER})
-set(BAZEL_ARGS --compilation_mode=${BAZEL_COMPILATION_MODE} --config=unsupported_crosstool --cxxopt=-std=c++1y)
+set(BAZEL_ARGS --compilation_mode=${BAZEL_COMPILATION_MODE} --config=unsupported_crosstool --cxxopt=-std=c++1y --host_cxxopt=-std=c++1y)
 if(CMAKE_VERBOSE_MAKEFILE)
   set(BAZEL_ARGS --subcommands ${BAZEL_ARGS})
 endif()
@@ -221,7 +221,7 @@ if (OFF)
 endif()
 
 if (WITH_IIWA_DRIVER_RLG OR WITH_IIWA_DRIVER_TRI)
-  
+
 
   set(IIWA_DRIVER_GIT_REPOSITORY
 	"git@github.com:RobotLocomotion/drake-iiwa-driver.git"
@@ -231,7 +231,7 @@ if (WITH_IIWA_DRIVER_RLG OR WITH_IIWA_DRIVER_TRI)
   # initialize IIWA_DRIVER_GIT_TAG to be empty
   # then set it based on if we are using RLG or TRI driver
   set(IIWA_DRIVER_GIT_TAG "")
-  
+
   if (WITH_IIWA_DRIVER_RLG)
     set(IIWA_DRIVER_GIT_TAG
     "29cdd446394e0f350651271a87a105e72c41cf8e"
@@ -246,7 +246,7 @@ if (WITH_IIWA_DRIVER_RLG OR WITH_IIWA_DRIVER_TRI)
 
   message("IIWA_DRIVER_GIT_TAG ${IIWA_DRIVER_GIT_TAG}")
 
-  
+
   ExternalProject_Add(drake-iiwa-driver
     SOURCE_DIR ${build_dir}/externals/drake-iiwa-driver
     BINARY_DIR ${build_dir}/drake-iiwa-driver
