@@ -117,6 +117,17 @@ ExternalProject_Add(drake
 )
 
 
+ExternalProject_Add(libbot
+  SOURCE_DIR ${build_dir}/externals/libbot
+  BINARY_DIR ${build_dir}/libbot
+  GIT_REPOSITORY "https://github.com/RobotLocomotion/libbot2.git"
+  GIT_TAG "f260260b7d04c1d85169f985e1a2b4447a6832ef"
+  BUILD_ALWAYS 1
+  CMAKE_CACHE_ARGS
+  ${CMAKE_ARGS_FOR_EXTERNALS}
+  DEPENDS drake
+  )
+
 # This is based on drake's VTK/Qt dependency (see `tools/vtk.bzl` in drake).
 # On MacOS, Drake uses homebrew VTK compiled with Qt5 and brew Python
 # On Linux, checks distribution
@@ -168,12 +179,13 @@ ExternalProject_Add(director
     -DUSE_SYSTEM_VTK:BOOL=ON
     ${VTK_ARGS}
     -DUSE_PCL:BOOL=${WITH_PERCEPTION}
-    -DUSE_APRILTAGS:BOOL=${WITH_PERCEPTION}
-    -DUSE_OPENNI2_LCM:BOOL=OFF # don't build OPENNI2 driver, conflicts with openni2_launch in ROS
+    #-DUSE_APRILTAGS:BOOL=${WITH_PERCEPTION}
+    -DUSE_APRILTAGS:BOOL=OFF
+    -DUSE_OPENNI2_LCM:BOOL=ON
     -DUSE_PERCEPTION:BOOL=${WITH_PERCEPTION}
     ${CMAKE_ARGS_FOR_EXTERNALS}
   INSTALL_COMMAND ""
-  DEPENDS drake
+  DEPENDS drake libbot
 )
 
 ExternalProject_Add(common_utils
@@ -361,7 +373,7 @@ if (WITH_ROS)
       ${CMAKE_ARGS_FOR_EXTERNALS}
       # Combine environment prefix path (with ROS) with our own
       "-DCMAKE_PREFIX_PATH:PATH=${CMAKE_INSTALL_PREFIX};${CMAKE_PREFIX_PATH_ENV}"
-    DEPENDS drake director common_utils 
+    DEPENDS drake director common_utils
   )
 endif()
 
