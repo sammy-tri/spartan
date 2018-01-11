@@ -26,6 +26,7 @@ apt install --no-install-recommends \
   libxt-dev \
   libtheora-dev \
   libxml2-dev \
+  libxmu-dev \
   make \
   python-matplotlib \
   qt5-default \
